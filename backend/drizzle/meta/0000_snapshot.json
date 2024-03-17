@@ -1,0 +1,595 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "fd11659d-871f-4106-b3d6-7a3cc3eee80c",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "ADMIN": {
+      "name": "ADMIN",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email_id": {
+          "name": "email_id",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "ADMIN_id": {
+          "name": "ADMIN_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "ADMIN_email_id_unique": {
+          "name": "ADMIN_email_id_unique",
+          "columns": [
+            "email_id"
+          ]
+        }
+      }
+    },
+    "AFTER_IMAGE": {
+      "name": "AFTER_IMAGE",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "complaint_id": {
+          "name": "complaint_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "complaint_id": {
+          "name": "complaint_id",
+          "columns": [
+            "complaint_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "AFTER_IMAGE_complaint_id_COMPLAINT_id_fk": {
+          "name": "AFTER_IMAGE_complaint_id_COMPLAINT_id_fk",
+          "tableFrom": "AFTER_IMAGE",
+          "tableTo": "COMPLAINT",
+          "columnsFrom": [
+            "complaint_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "AFTER_IMAGE_id_complaint_id": {
+          "name": "AFTER_IMAGE_id_complaint_id",
+          "columns": [
+            "id",
+            "complaint_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "BEFORE_IMAGE": {
+      "name": "BEFORE_IMAGE",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "complaint_id": {
+          "name": "complaint_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "complaint_id": {
+          "name": "complaint_id",
+          "columns": [
+            "complaint_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "BEFORE_IMAGE_complaint_id_COMPLAINT_id_fk": {
+          "name": "BEFORE_IMAGE_complaint_id_COMPLAINT_id_fk",
+          "tableFrom": "BEFORE_IMAGE",
+          "tableTo": "COMPLAINT",
+          "columnsFrom": [
+            "complaint_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "BEFORE_IMAGE_id_complaint_id": {
+          "name": "BEFORE_IMAGE_id_complaint_id",
+          "columns": [
+            "id",
+            "complaint_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "COMPLAINT": {
+      "name": "COMPLAINT",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "token": {
+          "name": "token",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "wastetype_id": {
+          "name": "wastetype_id",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status_id": {
+          "name": "status_id",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "emp_id": {
+          "name": "emp_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "emp_id": {
+          "name": "emp_id",
+          "columns": [
+            "emp_id"
+          ],
+          "isUnique": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        },
+        "wastetype_id": {
+          "name": "wastetype_id",
+          "columns": [
+            "wastetype_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "COMPLAINT_wastetype_id_WASTE_TYPE_id_fk": {
+          "name": "COMPLAINT_wastetype_id_WASTE_TYPE_id_fk",
+          "tableFrom": "COMPLAINT",
+          "tableTo": "WASTE_TYPE",
+          "columnsFrom": [
+            "wastetype_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "COMPLAINT_status_id_COMPLAINT_STATUS_id_fk": {
+          "name": "COMPLAINT_status_id_COMPLAINT_STATUS_id_fk",
+          "tableFrom": "COMPLAINT",
+          "tableTo": "COMPLAINT_STATUS",
+          "columnsFrom": [
+            "status_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "COMPLAINT_user_id_USER_id_fk": {
+          "name": "COMPLAINT_user_id_USER_id_fk",
+          "tableFrom": "COMPLAINT",
+          "tableTo": "USER",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "COMPLAINT_emp_id_EMPLOYEE_id_fk": {
+          "name": "COMPLAINT_emp_id_EMPLOYEE_id_fk",
+          "tableFrom": "COMPLAINT",
+          "tableTo": "EMPLOYEE",
+          "columnsFrom": [
+            "emp_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "COMPLAINT_id": {
+          "name": "COMPLAINT_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "COMPLAINT_token_unique": {
+          "name": "COMPLAINT_token_unique",
+          "columns": [
+            "token"
+          ]
+        }
+      }
+    },
+    "COMPLAINT_STATUS": {
+      "name": "COMPLAINT_STATUS",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status_name": {
+          "name": "status_name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "COMPLAINT_STATUS_id": {
+          "name": "COMPLAINT_STATUS_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "COMPLAINT_STATUS_status_name_unique": {
+          "name": "COMPLAINT_STATUS_status_name_unique",
+          "columns": [
+            "status_name"
+          ]
+        }
+      }
+    },
+    "EMPLOYEE": {
+      "name": "EMPLOYEE",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email_id": {
+          "name": "email_id",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "capacity_kg": {
+          "name": "capacity_kg",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contact_info": {
+          "name": "contact_info",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "EMPLOYEE_id": {
+          "name": "EMPLOYEE_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "EMPLOYEE_email_id_unique": {
+          "name": "EMPLOYEE_email_id_unique",
+          "columns": [
+            "email_id"
+          ]
+        }
+      }
+    },
+    "GPS_LOCATION": {
+      "name": "GPS_LOCATION",
+      "columns": {
+        "complaint_id": {
+          "name": "complaint_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "area": {
+          "name": "area",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "GPS_LOCATION_complaint_id_COMPLAINT_id_fk": {
+          "name": "GPS_LOCATION_complaint_id_COMPLAINT_id_fk",
+          "tableFrom": "GPS_LOCATION",
+          "tableTo": "COMPLAINT",
+          "columnsFrom": [
+            "complaint_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "GPS_LOCATION_complaint_id": {
+          "name": "GPS_LOCATION_complaint_id",
+          "columns": [
+            "complaint_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "USER": {
+      "name": "USER",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email_id": {
+          "name": "email_id",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "USER_id": {
+          "name": "USER_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "USER_email_id_unique": {
+          "name": "USER_email_id_unique",
+          "columns": [
+            "email_id"
+          ]
+        }
+      }
+    },
+    "WASTE_TYPE": {
+      "name": "WASTE_TYPE",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "type_name": {
+          "name": "type_name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "WASTE_TYPE_id": {
+          "name": "WASTE_TYPE_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "WASTE_TYPE_type_name_unique": {
+          "name": "WASTE_TYPE_type_name_unique",
+          "columns": [
+            "type_name"
+          ]
+        }
+      }
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
