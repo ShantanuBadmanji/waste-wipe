@@ -4,7 +4,7 @@ import { passportAuthenticateLocal } from "../middlewares/passport-authenticate-
 const AuthRouter = Router();
 
 AuthRouter.get("/", (req, res) => {
-  res.json("saasdaaa");
+  res.json({ message: "welcome to api/auth endpoint", status: 200 });
 });
 
 AuthRouter.post("/login/success", (req, res) =>

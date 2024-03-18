@@ -2,13 +2,11 @@ import {
   IStrategyOptionsWithRequest,
   Strategy as LocalStrategy,
 } from "passport-local";
-import passport from "passport";
 import { drizzlePool } from "../../../db/connect";
 import { employee, user } from "../../../db/schemas";
 import { eq } from "drizzle-orm";
-import { Role, SessionUser, StrategyNames } from "../../../utils/types";
+import { PersonTable, Role, SessionUser } from "../../../utils/types";
 import createHttpError from "http-errors";
-import { MySqlTableWithColumns } from "drizzle-orm/mysql-core";
 import { admin } from "../../../db/schemas/admin";
 import { Request } from "express-serve-static-core";
 
@@ -17,7 +15,7 @@ const strategyOptions = {
   passReqToCallback: true,
 } satisfies IStrategyOptionsWithRequest;
 
-const verifyFromTable = (Table: MySqlTableWithColumns<any>, role: Role) => {
+const verifyFromTable = (Table: PersonTable, role: Role) => {
   const verify = async (
     req: Request,
     username: string,

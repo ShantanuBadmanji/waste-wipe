@@ -13,7 +13,7 @@ import {
   localAdminStrategy,
   localEmployeeStrategy,
   localUserStrategy,
-} from "./lib/passport/strategies/local-user";
+} from "./lib/passport/strategies/local";
 import morgan from "morgan";
 import AdminRouter from "./routes/admin";
 const app = express();
