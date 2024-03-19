@@ -1,5 +1,10 @@
 import { Response, Request, NextFunction } from "express-serve-static-core";
-import { DataResBody, MessageResBody } from "../utils/types";
+import {
+  DataResBody,
+  GetComplaintInterface,
+  MessageResBody,
+  PostComplaintInterface,
+} from "../utils/types";
 
 import {
   complaint,
@@ -31,17 +36,6 @@ import { SelectEmployee } from "../db/schemas/employee";
 import crypto from "crypto";
 import createHttpError from "http-errors";
 import { isSessionUser } from "../utils";
-
-interface GetComplaintInterface
-  extends Pick<SelectComplaint, "id" | "token" | "createdAt" | "modifiedAt"> {
-  typeName: SelectWasteType["typeName"] | null;
-  statusName: SelectComplaintStatus["statusName"] | null;
-  user: Pick<SelectUser, "name" | "emailId"> | null;
-  employee: Pick<SelectEmployee, "name" | "emailId" | "contactInfo"> | null;
-  location: Omit<SelectGpsLocation, "complaintId"> | null;
-  beforeImages: Array<SelectBeforeImage["url"]>;
-  afterImages: Array<SelectAfterImage["url"]>;
-}
 
 export const getComplaints = async (
   req: Request,
@@ -107,14 +101,6 @@ export const getComplaints = async (
   }
 };
 
-/**
- * Represents the interface for posting a complaint.
- */
-interface PostComplaintInterface
-  extends Pick<InsertComplaint, "wastetypeId" | "userId"> {
-  location: Omit<InsertGpsLocation, "complaintId">;
-  beforeImages: Array<InsertBeforeImage["url"]>;
-}
 export const postComplaint = async (
   req: Request<unknown, unknown, PostComplaintInterface>,
   res: Response<MessageResBody>,
