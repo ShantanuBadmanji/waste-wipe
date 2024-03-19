@@ -9,7 +9,7 @@ export const defaultErrorHandler = (
   next: NextFunction
 ) => {
   let errStatus = 500;
-  const errMsg = e.message;
+  const errMsg = e.message || "Internal Server Error";
   if (createHttpError.isHttpError(e)) {
     errStatus = e.status;
   }

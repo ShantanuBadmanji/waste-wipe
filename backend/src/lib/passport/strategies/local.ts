@@ -3,11 +3,11 @@ import {
   Strategy as LocalStrategy,
 } from "passport-local";
 import { drizzlePool } from "../../../db/connect";
-import { employee, user } from "../../../db/schemas";
+import { admin, employee, user } from "../../../db/schemas";
 import { eq } from "drizzle-orm";
 import { PersonTable, Role, SessionUser } from "../../../utils/types";
 import createHttpError from "http-errors";
-import { admin } from "../../../db/schemas/admin";
+
 import { Request } from "express-serve-static-core";
 
 const strategyOptions = {
@@ -15,20 +15,21 @@ const strategyOptions = {
   passReqToCallback: true,
 } satisfies IStrategyOptionsWithRequest;
 
-const verifyFromTable = (Table: PersonTable, role: Role) => {
+const verifyFromTable = (table: PersonTable, role: Role) => {
   const verify = async (
     req: Request,
-    username: string,
+    emailId: string,
     password: string,
     done: (error: any, user?: SessionUser | null) => void
   ) => {
-    console.log("🚀 ~ verifyFromTable ~ username:", username);
+    console.log("🚀 ~ verifyFromTable ~ emailId:", emailId);
     console.log("🚀 ~ verifyFromTable ~ password:", password);
     try {
       const [resUser] = await drizzlePool
         .select()
-        .from(Table)
-        .where(eq(Table.emailId, username));
+        .from(table)
+        .where(eq(table.emailId, emailId));
+      console.log("🚀 ~ verifyFromTable ~ resUser:", resUser);
 
       if (!resUser || !(resUser.password == password))
         return done(

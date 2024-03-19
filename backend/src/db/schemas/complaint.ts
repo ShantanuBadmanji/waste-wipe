@@ -17,9 +17,12 @@ export const complaint = mysqlTable(
   {
     id: int("id", { unsigned: true }).primaryKey().autoincrement().notNull(),
     token: varchar("token", { length: 100 }).unique().notNull(),
-    createdAt: timestamp("created_at", { mode: "string" }).default(
-      sql`CURRENT_TIMESTAMP`
-    ),
+    createdAt: timestamp("created_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    modifiedAt: timestamp("modified_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
     wastetypeId: tinyint("wastetype_id").references(() => wasteType.id, {
       onDelete: "set null",
       onUpdate: "cascade",

@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "ab726278-49ad-45fd-9d8c-163531956782",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "b9cd01d5-0da4-423b-a5da-e0bd1d618054",
+  "prevId": "ab726278-49ad-45fd-9d8c-163531956782",
   "tables": {
     "ADMIN": {
       "name": "ADMIN",
@@ -196,7 +196,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "modified_at": {
+          "name": "modified_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false,
           "default": "CURRENT_TIMESTAMP"
         },

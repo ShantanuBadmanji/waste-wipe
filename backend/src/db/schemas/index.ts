@@ -9,13 +9,13 @@ import { user } from "./user";
 import { wasteType } from "./waste-type";
 
 export {
-  user as user, 
-  employee as employee,
-  admin as admin,
-  wasteType as wasteType,
-  complaintStatus as complaintStatus,
-  complaint as complaint,
-  beforeImage as beforeImage,
-  afterImage as afterImage,
-  gpsLocation as gpsLocation,
+  user,
+  employee,
+  admin,
+  wasteType,
+  complaintStatus,
+  complaint,
+  beforeImage,
+  afterImage,
+  gpsLocation,
 };

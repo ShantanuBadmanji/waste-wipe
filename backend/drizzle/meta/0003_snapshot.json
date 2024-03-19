@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "ab726278-49ad-45fd-9d8c-163531956782",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "3240050c-cd2c-43d3-b8ba-24e7c5b7b4c1",
+  "prevId": "dea23bec-336d-4dc8-9fae-4ea1ecbe692e",
   "tables": {
     "ADMIN": {
       "name": "ADMIN",
@@ -76,7 +76,7 @@
           "name": "url",
           "type": "varchar(500)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },
@@ -136,7 +136,7 @@
           "name": "url",
           "type": "varchar(500)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },
@@ -196,7 +196,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "modified_at": {
+          "name": "modified_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false,
           "default": "CURRENT_TIMESTAMP"
         },

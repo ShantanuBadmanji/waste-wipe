@@ -1,3 +1,5 @@
+import { admin, employee, user } from "../db/schemas";
+
 export interface DataResBody<T> {
   data: T;
   status: number;
@@ -10,6 +12,7 @@ export interface MessageResBody {
 export type Role = "user" | "employee" | "admin";
 
 export type PersonTable = typeof user | typeof admin | typeof employee;
+
 
 export interface SessionUser extends Express.User {
   id: string;

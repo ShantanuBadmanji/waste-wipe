@@ -19,7 +19,7 @@ export const beforeImage = mysqlTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    url: varchar("url", { length: 500 }),
+    url: varchar("url", { length: 500 }).notNull(),
   },
   (table) => {
     return {

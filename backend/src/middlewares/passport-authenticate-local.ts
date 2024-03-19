@@ -19,7 +19,7 @@ export const passportAuthenticateLocal = (strategy: StrategyNames) => {
     };
 
     passport.authenticate(
-      "local-user" satisfies StrategyNames,
+      strategy satisfies StrategyNames,
       cb satisfies AuthenticateCallback
     )(req, res, next);
   };

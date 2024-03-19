@@ -5,7 +5,13 @@ import session from "express-session";
 import passport from "passport";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { AuthRouter, UserRouter } from "./routes";
+import {
+  AuthRouter,
+  ComplaintRouter,
+  ComplaintStatusRouter,
+  UserRouter,
+  WasteTypeRouter,
+} from "./routes";
 import { defaultErrorHandler } from "./middlewares/default-error-handler";
 import createHttpError from "http-errors";
 import { StrategyNames } from "./utils/types";
@@ -59,12 +65,15 @@ passport.deserializeUser(function (user: any, cb) {
 });
 
 passport.use("local-user" satisfies StrategyNames, localUserStrategy);
-passport.use("local-employee" satisfies StrategyNames, localAdminStrategy);
-passport.use("local-admin" satisfies StrategyNames, localEmployeeStrategy);
+passport.use("local-admin" satisfies StrategyNames, localAdminStrategy);
+passport.use("local-employee" satisfies StrategyNames, localEmployeeStrategy);
 
+app.use("/api/auth", AuthRouter);
 app.use("/api/users", UserRouter);
 app.use("/api/admins", AdminRouter);
-app.use("/api/auth", AuthRouter);
+app.use("/api/complaint-statuses", ComplaintStatusRouter);
+app.use("/api/wastetypes", WasteTypeRouter);
+app.use("/api/complaints", ComplaintRouter);
 
 // 404: page not found Handler
 app.use("/*", () => {
