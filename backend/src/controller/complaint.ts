@@ -36,6 +36,7 @@ import { SelectEmployee } from "../db/schemas/employee";
 import crypto from "crypto";
 import createHttpError from "http-errors";
 import { isSessionUser } from "../utils";
+import { cloudinaryStorage } from "../lib/passport/strategies/multer";
 
 export const getComplaints = async (
   req: Request,
@@ -102,7 +103,7 @@ export const getComplaints = async (
 };
 
 export const postComplaint = async (
-  req: Request<unknown, unknown, PostComplaintInterface>,
+  req: Request<{}, unknown, PostComplaintInterface>,
   res: Response<MessageResBody>,
   next: NextFunction
 ) => {
@@ -186,6 +187,21 @@ export const postComplaint = async (
       .json({ status: 201, message: "Complaint added successfully" });
   } catch (error: any) {
     console.log("🚀 ~ error:", error);
+    const deleteFilePromises = (req.files as Express.Multer.File[]).map(
+      (file) => {
+        const promise = new Promise((resolve, reject) => {
+          cloudinaryStorage._removeFile(req, file, (err: Error) => {
+            if (err) reject(err);
+            resolve(null);
+          });
+        });
+        return promise;
+      }
+    );
+    Promise.allSettled(deleteFilePromises).then((deleteFilePromiseresults) =>
+      console.log("🚀 ~ deleteFilePromiseresults:", deleteFilePromiseresults)
+    );
+
     return next(error);
   }
 };
