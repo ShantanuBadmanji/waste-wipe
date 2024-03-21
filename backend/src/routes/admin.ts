@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Admin } from "../controller";
+import Admin from "../controller/admin";
 import { PrivilegedRoles } from "../middlewares/privileged-roles";
 
 const AdminRouter = Router();

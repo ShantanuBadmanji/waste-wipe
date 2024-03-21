@@ -1,14 +1,14 @@
 import { Response, Request, NextFunction } from "express-serve-static-core";
-import { DataResBody, MessageResBody } from "../utils/types";
+import { DataResBody, MessageResBody } from "../../utils/types";
 import {
   InsertComplaintStatus,
   SelectComplaintStatus,
-} from "../db/schemas/complaint-status";
-import { complaintStatus } from "../db/schemas";
-import { drizzlePool } from "../db/connect";
+} from "../../db/schemas/complaint-status";
+import { complaintStatus } from "../../db/schemas";
+import { drizzlePool } from "../../db/connect";
 import { eq } from "drizzle-orm";
 
-export const getComplaintStatuses = async (
+const getComplaintStatuses = async (
   req: Request,
   res: Response<DataResBody<SelectComplaintStatus[]>>,
   next: NextFunction
@@ -22,7 +22,7 @@ export const getComplaintStatuses = async (
   }
 };
 
-export const postComplaintStatus = async (
+const postComplaintStatus = async (
   req: Request<unknown, unknown, InsertComplaintStatus>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -40,7 +40,7 @@ export const postComplaintStatus = async (
   }
 };
 
-export const deleteComplaintStatusById = async (
+const deleteComplaintStatusById = async (
   req: Request<{ id: number }>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -55,7 +55,7 @@ export const deleteComplaintStatusById = async (
     return next(error);
   }
 };
-export const putComplaintStatusById = async (
+const putComplaintStatusById = async (
   req: Request<{ id: number }, unknown, InsertComplaintStatus>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -73,3 +73,11 @@ export const putComplaintStatusById = async (
     return next(error);
   }
 };
+const ComplaintStatus = {
+  getAll: getComplaintStatuses,
+  post: postComplaintStatus,
+  deleteById: deleteComplaintStatusById,
+  putById: putComplaintStatusById,
+};
+
+export default ComplaintStatus;

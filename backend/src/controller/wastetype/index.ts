@@ -1,11 +1,11 @@
 import { Response, Request, NextFunction } from "express-serve-static-core";
-import { DataResBody, MessageResBody } from "../utils/types";
-import { wasteType } from "../db/schemas";
-import { drizzlePool } from "../db/connect";
+import { DataResBody, MessageResBody } from "../../utils/types";
+import { wasteType } from "../../db/schemas";
+import { drizzlePool } from "../../db/connect";
 import { eq } from "drizzle-orm";
-import { InsertWasteType, SelectWasteType } from "../db/schemas/waste-type";
+import { InsertWasteType, SelectWasteType } from "../../db/schemas/waste-type";
 
-export const getWasteTypes = async (
+const getWasteTypes = async (
   req: Request,
   res: Response<DataResBody<SelectWasteType[]>>,
   next: NextFunction
@@ -19,7 +19,7 @@ export const getWasteTypes = async (
   }
 };
 
-export const postWasteType = async (
+const postWasteType = async (
   req: Request<unknown, unknown, InsertWasteType>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -37,7 +37,7 @@ export const postWasteType = async (
   }
 };
 
-export const deleteWasteTypeById = async (
+const deleteWasteTypeById = async (
   req: Request<{ id: number }, unknown, unknown>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -53,7 +53,7 @@ export const deleteWasteTypeById = async (
   }
 };
 
-export const putWasteTypeById = async (
+const putWasteTypeById = async (
   req: Request<{ id: number }, unknown, InsertWasteType>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -73,3 +73,12 @@ export const putWasteTypeById = async (
     return next(error);
   }
 };
+
+const WasteType = {
+  getAll: getWasteTypes,
+  post: postWasteType,
+  deleteById: deleteWasteTypeById,
+  putById: putWasteTypeById,
+};
+
+export default WasteType;

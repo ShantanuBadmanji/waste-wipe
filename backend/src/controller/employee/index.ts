@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
-import { InsertEmployee, SelectEmployee } from "../db/schemas/employee";
-import { employee } from "../db/schemas";
-import { drizzlePool } from "../db/connect";
-import { DataResBody, MessageResBody } from "../utils/types";
+import { InsertEmployee, SelectEmployee } from "../../db/schemas/employee";
+import { employee } from "../../db/schemas";
+import { drizzlePool } from "../../db/connect";
+import { DataResBody, MessageResBody } from "../../utils/types";
 
-export const getEmployees = async (
+const getEmployees = async (
   req: Request,
   res: Response<DataResBody<Pick<SelectEmployee, "emailId" | "name">[]>>,
   next: NextFunction
@@ -19,7 +19,7 @@ export const getEmployees = async (
   }
 };
 
-export const postEmployee = async (
+const postEmployee = async (
   req: Request<unknown, unknown, InsertEmployee>,
   res: Response<MessageResBody>,
   next: NextFunction
@@ -39,3 +39,10 @@ export const postEmployee = async (
     next(error);
   }
 };
+
+const Employee = {
+  getAll: getEmployees,
+  post: postEmployee,
+};
+
+export default Employee;

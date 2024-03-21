@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ComplaintStatus } from "../controller";
+import ComplaintStatus from "../controller/complaint-status";
 import { PrivilegedRoles } from "../middlewares/privileged-roles";
 
 const ComplaintStatusRouter = Router();

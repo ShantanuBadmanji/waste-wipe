@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { WasteType } from "../controller";
 import { PrivilegedRoles } from "../middlewares/privileged-roles";
+import WasteType from "../controller/wastetype";
 
 const WasteTypeRouter = Router();
 
