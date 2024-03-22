@@ -14,18 +14,19 @@ ComplaintRouter.post(
   PostComplaintReqBodyTransform,
   Complaint.post
 );
+
+ComplaintRouter.patch(
+  "/:complaintId",
+  PrivilegedRoles(["admin"]),
+  Complaint.patch
+);
+
 ComplaintRouter.delete("/", Complaint.deleteByToken);
 
 ComplaintRouter.post(
   "/:complaintId/after-images",
   PrivilegedRoles(["employee", "admin"]),
   Complaint.afterImages.post
-);
-
-ComplaintRouter.post(
-  "/:complaintId/complaint-statuses",
-  PrivilegedRoles(["admin"]),
-  Complaint.complaintStatus.post
 );
 
 export default ComplaintRouter;
