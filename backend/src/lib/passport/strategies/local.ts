@@ -5,7 +5,7 @@ import {
 import { drizzlePool } from "../../../db/connect";
 import { admin, employee, user } from "../../../db/schemas";
 import { eq } from "drizzle-orm";
-import { PersonTable, Role, SessionUser } from "../../../utils/types";
+import { PersonTable, Role } from "../../../utils/types";
 import createHttpError from "http-errors";
 
 import { Request } from "express-serve-static-core";
@@ -20,7 +20,7 @@ const verifyFromTable = (table: PersonTable, role: Role) => {
     req: Request,
     emailId: string,
     password: string,
-    done: (error: any, user?: SessionUser | null) => void
+    done: (error: any, user?: Express.User | null) => void
   ) => {
     console.log("🚀 ~ verifyFromTable ~ emailId:", emailId);
     console.log("🚀 ~ verifyFromTable ~ password:", password);

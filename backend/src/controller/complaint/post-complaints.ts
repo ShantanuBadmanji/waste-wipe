@@ -7,7 +7,6 @@ import { eq } from "drizzle-orm";
 
 import crypto from "crypto";
 import createHttpError from "http-errors";
-import { isSessionUser } from "../../utils";
 import { cloudinaryStorage } from "../../lib/passport/strategies/multer";
 
 const postComplaint = async (
@@ -23,7 +22,7 @@ const postComplaint = async (
     console.log("🚀 ~ location:", location);
     console.log("🚀 ~ beforeImages:", beforeImages);
 
-    if (req.isUnauthenticated() || !isSessionUser(req.user)) {
+    if (!req.isAuthenticated()) {
       throw new createHttpError.Unauthorized("User is not authenticated");
     }
 

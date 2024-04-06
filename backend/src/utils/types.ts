@@ -1,4 +1,18 @@
 import { admin, employee, user } from "../db/schemas";
+import { SelectAfterImage } from "../db/schemas/after-image";
+import {
+  InsertBeforeImage,
+  SelectBeforeImage,
+} from "../db/schemas/before-image";
+import { InsertComplaint, SelectComplaint } from "../db/schemas/complaint";
+import { SelectComplaintStatus } from "../db/schemas/complaint-status";
+import { SelectEmployee } from "../db/schemas/employee";
+import {
+  InsertGpsLocation,
+  SelectGpsLocation,
+} from "../db/schemas/gps-location";
+import { SelectUser } from "../db/schemas/user";
+import { SelectWasteType } from "../db/schemas/waste-type";
 
 export interface DataResBody<T> {
   data: T;
@@ -13,7 +27,7 @@ export type Role = "user" | "employee" | "admin";
 
 export type PersonTable = typeof user | typeof admin | typeof employee;
 
-export interface SessionUser extends Express.User {
+interface SessionUser {
   id: string;
   role: Role;
 }
@@ -38,4 +52,10 @@ export interface PostComplaintInterface
   extends Pick<InsertComplaint, "wastetypeId" | "userId"> {
   location: Omit<InsertGpsLocation, "complaintId">;
   beforeImages: Array<InsertBeforeImage["url"]>;
+}
+
+declare global {
+  namespace Express {
+    interface User extends SessionUser {}
+  }
 }

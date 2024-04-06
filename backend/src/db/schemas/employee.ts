@@ -8,6 +8,7 @@ export const employee = mysqlTable("EMPLOYEE", {
   password: varchar("password", { length: 25 }).notNull(),
   capacityKg: int("capacity_kg", { unsigned: true }),
   contactInfo: varchar("contact_info", { length: 12 }),
+  city: varchar("city", { length: 25 }).notNull(),
 });
 
 export type SelectEmployee = InferSelectModel<typeof employee>;

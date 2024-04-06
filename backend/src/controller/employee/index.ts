@@ -30,8 +30,12 @@ const postEmployee = async (
   console.log("🚀 ~ name:", name);
   const password = req.body.password;
   console.log("🚀 ~ password:", password);
+  const city = req.body.city;
+  console.log("🚀 ~ city:", city);
   try {
-    await drizzlePool.insert(employee).values({ emailId, name, password });
+    await drizzlePool
+      .insert(employee)
+      .values({ emailId, name, password, city });
     console.log("🚀 ~ drizzlePool:", "insertion done");
 
     res.status(201).json({ message: "created user successfully", status: 201 });

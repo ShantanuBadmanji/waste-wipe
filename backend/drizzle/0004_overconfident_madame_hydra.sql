@@ -1,0 +1,1 @@
+ALTER TABLE `EMPLOYEE` ADD `city` varchar(25) NOT NULL;

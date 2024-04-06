@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import createHttpError from "http-errors";
-import { isSessionUser } from "../utils";
 import { Role } from "../utils/types";
 
 /**
@@ -10,10 +9,8 @@ import { Role } from "../utils/types";
  */
 export const PrivilegedRoles = (roles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (req.isUnauthenticated()) return next(createHttpError.Unauthorized());
-    if (isSessionUser(req.user) && roles.includes(req.user.role)) {
-      return next();
-    }
-    next(createHttpError.Forbidden("not a previledged user"));
+    if (!req.isAuthenticated()) next(createHttpError.Unauthorized());
+    else if (roles.includes(req.user.role)) next();
+    else next(createHttpError.Forbidden("not a previledged user"));
   };
 };

@@ -3,7 +3,6 @@ import { afterImage, complaint, employee } from "../../../db/schemas";
 import { drizzlePool } from "../../../db/connect";
 import { eq } from "drizzle-orm";
 import createHttpError from "http-errors";
-import { isSessionUser } from "../../../utils";
 
 /**
  * Handles the POST request to upload after images for a complaint.
@@ -18,7 +17,7 @@ const postAfterImagesForComplaint = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (!isSessionUser(req.user) || !(req.user.role === "employee")) {
+  if (!req.isAuthenticated() || !(req.user.role === "employee")) {
     return next(
       new createHttpError.Unauthorized(
         "You are not authorized to perform this action"

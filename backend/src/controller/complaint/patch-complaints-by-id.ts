@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express-serve-static-core";
 
 import { eq, sql } from "drizzle-orm";
 import createHttpError from "http-errors";
-import { isSessionUser } from "../../utils";
 import { drizzlePool } from "../../db/connect";
 import { complaint, complaintStatus } from "../../db/schemas";
 import { MessageResBody } from "../../utils/types";
@@ -12,7 +11,7 @@ const patchComplaintById = async (
   res: Response<MessageResBody>,
   next: NextFunction
 ) => {
-  if (!isSessionUser(req.user) || !(req.user.role === "admin")) {
+  if (!req.isAuthenticated() || !(req.user.role === "admin")) {
     return next(
       new createHttpError.Forbidden(
         "You are not authorized to perform this action"
