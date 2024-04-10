@@ -5,7 +5,7 @@ import session from "express-session";
 import passport from "passport";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { defaultErrorHandler } from "./middlewares/default-error-handler";
+import { defaultErrorHandler } from "./middlewares/default-error-handler.middleware";
 import createHttpError from "http-errors";
 import { StrategyNames } from "./utils/types";
 import {

@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { PrivilegedRoles } from "../../../middlewares/privileged-roles";
+import { PrivilegedRoles } from "../../../middlewares/privileged-roles.middleware";
 import { createNewEmployee, getEmployees } from "../services/employee.service";
 import CreateEmployeeDto from "../utils/dtos/createEmployeeDto";
 import createHttpError from "http-errors";

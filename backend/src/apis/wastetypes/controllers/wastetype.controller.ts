@@ -1,6 +1,6 @@
 import { Router } from "express";
 import WasteTypeServices from "../services/wastetype.service";
-import { PrivilegedRoles } from "../../../middlewares/privileged-roles";
+import { PrivilegedRoles } from "../../../middlewares/privileged-roles.middleware";
 import createWasteTypeDto from "../dtos/createWasteType.dto";
 import { fromZodError } from "zod-validation-error";
 import createHttpError from "http-errors";

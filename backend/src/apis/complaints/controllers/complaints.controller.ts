@@ -5,7 +5,7 @@ import createComplaintDto from "../utils/dtos/createComplaint.dto";
 import createHttpError from "http-errors";
 import { fromZodError } from "zod-validation-error";
 import createNewComplaint from "../services/create-new-complaint.service";
-import { PrivilegedRoles } from "../../../middlewares/privileged-roles";
+import { PrivilegedRoles } from "../../../middlewares/privileged-roles.middleware";
 import deleteImagesFromCloudinary from "../../../lib/multer-cloudinary/delete-images-from-cloudinary";
 import AfterImagesRouter from "../after-images/controllers/afterImages.complaint.controller";
 

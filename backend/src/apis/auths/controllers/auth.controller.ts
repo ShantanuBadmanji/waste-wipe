@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { passportAuthenticateLocal } from "../../../middlewares/passport-authenticate-local";
+import { passportAuthenticateLocal } from "../../../middlewares/passport-authenticate-local.middleware";
 
 /**
  * Router for handling authentication related endpoints.

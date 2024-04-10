@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PrivilegedRoles } from "../../../middlewares/privileged-roles";
+import { PrivilegedRoles } from "../../../middlewares/privileged-roles.middleware";
 import { CreateNewUser, getUsers } from "../services/user.service";
 import CreateUserDto from "../utils/dtos/createUserDto";
 import createHttpError from "http-errors";

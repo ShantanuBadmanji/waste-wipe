@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PrivilegedRoles } from "../../../../middlewares/privileged-roles";
+import { PrivilegedRoles } from "../../../../middlewares/privileged-roles.middleware";
 import createHttpError from "http-errors";
 import saveAfterImages from "../services/save-after-images.service";
 import saveAfterImagesDto from "../utils/dtos/saveAfterImages.dto";

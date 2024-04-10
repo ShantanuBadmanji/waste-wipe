@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PrivilegedRoles } from "../../../middlewares/privileged-roles";
+import { PrivilegedRoles } from "../../../middlewares/privileged-roles.middleware";
 import ComplaintStatusService from "../services/complaintStatus.services";
 import createComplaintStatusDto from "../utils/dtos/createComplaintStatus.dto";
 import { fromZodError } from "zod-validation-error";
