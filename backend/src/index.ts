@@ -5,13 +5,6 @@ import session from "express-session";
 import passport from "passport";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import {
-  AuthRouter,
-  ComplaintRouter,
-  ComplaintStatusRouter,
-  UserRouter,
-  WasteTypeRouter,
-} from "./routes";
 import { defaultErrorHandler } from "./middlewares/default-error-handler";
 import createHttpError from "http-errors";
 import { StrategyNames } from "./utils/types";
@@ -21,7 +14,13 @@ import {
   localUserStrategy,
 } from "./lib/passport/strategies/local";
 import morgan from "morgan";
-import AdminRouter from "./routes/admin";
+
+import UserRouter from "./apis/users/controllers/user.controller";
+import ComplaintRouter from "./apis/complaints/controllers/complaints.controller";
+import AdminRouter from "./apis/admins/controllers/admin.controller";
+import ComplaintStatusRouter from "./apis/complaint-statuses/controllers/complaintStatus.controller";
+import WasteTypeRouter from "./apis/wastetypes/controllers/wastetype.controller";
+import AuthRouter from "./apis/auths/controllers/auth.controller";
 const app = express();
 
 app.use(morgan("dev"));

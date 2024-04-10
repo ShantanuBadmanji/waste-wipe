@@ -7,10 +7,18 @@ import { Role } from "../utils/types";
  * @param roles - An array of roles that have access to the route.
  * @returns A middleware function that checks if the user is authenticated and has the required privileges.
  */
-export const PrivilegedRoles = (roles: Role[]) => {
+export const PrivilegedRoles = (roles: Role[] | null = null) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (!req.isAuthenticated()) next(createHttpError.Unauthorized());
-    else if (roles.includes(req.user.role)) next();
-    else next(createHttpError.Forbidden("not a previledged user"));
+    // Check if the user is authenticated, if not, return a 401 Unauthorized error
+    if (!req.isAuthenticated()) return next(createHttpError.Unauthorized());
+
+    // If no roles are specified, allow access to the route
+    if (!roles) return next();
+
+    // Check if the user has the required roles
+    if (roles.includes(req.user.role)) return next();
+
+    // If the user does not have the required roles, return a 403 Forbidden error
+    next(createHttpError.Forbidden("not a previledged user"));
   };
 };
