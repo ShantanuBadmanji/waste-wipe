@@ -1,7 +1,7 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
 
-export const employee = mysqlTable("EMPLOYEE", {
+const employeeTable = mysqlTable("EMPLOYEE", {
   id: int("id", { unsigned: true }).primaryKey().autoincrement().notNull(),
   name: varchar("name", { length: 50 }).notNull(),
   emailId: varchar("email_id", { length: 50 }).unique().notNull(),
@@ -11,5 +11,7 @@ export const employee = mysqlTable("EMPLOYEE", {
   city: varchar("city", { length: 25 }).notNull(),
 });
 
-export type SelectEmployee = InferSelectModel<typeof employee>;
-export type InsertEmployee = InferInsertModel<typeof employee>;
+export type SelectEmployee = InferSelectModel<typeof employeeTable>;
+export type InsertEmployee = InferInsertModel<typeof employeeTable>;
+
+export default employeeTable;

@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import { drizzlePool } from "../../../db/connect";
-import { employee, user } from "../../../db/schemas";
+import { employeeTable, userTable } from "../../../db/schemas";
 import { InsertEmployee } from "../../../db/schemas/employee";
 
 /**
@@ -10,8 +10,8 @@ import { InsertEmployee } from "../../../db/schemas/employee";
  */
 const getEmployees = async () => {
   const employees = await drizzlePool
-    .select({ name: user.name, emailId: user.emailId })
-    .from(employee);
+    .select({ name: userTable.name, emailId: userTable.emailId })
+    .from(employeeTable);
 
   if (employees.length === 0) throw createHttpError("No employees found");
 
@@ -25,7 +25,7 @@ const getEmployees = async () => {
  * @param newEmployee - The details of the new employee to be created.
  */
 const createNewEmployee = async (newEmployee: InsertEmployee) => {
-  await drizzlePool.insert(employee).values({ ...newEmployee });
+  await drizzlePool.insert(employeeTable).values({ ...newEmployee });
   console.log("🚀 ~ drizzlePool:", "insertion done");
 };
 

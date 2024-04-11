@@ -5,15 +5,15 @@ import {
   primaryKey,
   varchar,
 } from "drizzle-orm/mysql-core";
-import { complaint } from "./complaint";
+import complaintTable  from "./complaint";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
-export const gpsLocation = mysqlTable(
+const gpsLocationTable = mysqlTable(
   "GPS_LOCATION",
   {
     complaintId: int("complaint_id", { unsigned: true })
       .notNull()
-      .references(() => complaint.id, {
+      .references(() => complaintTable.id, {
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
@@ -33,5 +33,7 @@ export const gpsLocation = mysqlTable(
   }
 );
 
-export type SelectGpsLocation = InferSelectModel<typeof gpsLocation>;
-export type InsertGpsLocation = InferInsertModel<typeof gpsLocation>;
+export type SelectGpsLocation = InferSelectModel<typeof gpsLocationTable>;
+export type InsertGpsLocation = InferInsertModel<typeof gpsLocationTable>;
+
+export default gpsLocationTable;

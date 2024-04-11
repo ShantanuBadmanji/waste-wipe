@@ -3,7 +3,7 @@ import {
   Strategy as LocalStrategy,
 } from "passport-local";
 import { drizzlePool } from "../../../db/connect";
-import { admin, employee, user } from "../../../db/schemas";
+import { adminTable, employeeTable, userTable } from "../../../db/schemas";
 import { eq } from "drizzle-orm";
 import { PersonTable, Role } from "../../../utils/types";
 import createHttpError from "http-errors";
@@ -47,13 +47,13 @@ const verifyFromTable = (table: PersonTable, role: Role) => {
 };
 export const localUserStrategy = new LocalStrategy(
   strategyOptions,
-  verifyFromTable(user, "user")
+  verifyFromTable(userTable, "user")
 );
 export const localAdminStrategy = new LocalStrategy(
   strategyOptions,
-  verifyFromTable(admin, "admin")
+  verifyFromTable(adminTable, "admin")
 );
 export const localEmployeeStrategy = new LocalStrategy(
   strategyOptions,
-  verifyFromTable(employee, "employee")
+  verifyFromTable(employeeTable, "employee")
 );

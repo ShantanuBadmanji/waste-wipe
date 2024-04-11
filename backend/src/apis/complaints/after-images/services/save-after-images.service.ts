@@ -1,6 +1,6 @@
 import { and, eq } from "drizzle-orm";
 import { drizzlePool } from "../../../../db/connect";
-import { afterImage, complaint, employee } from "../../../../db/schemas";
+import { afterImageTable, complaintTable, employeeTable } from "../../../../db/schemas";
 
 import createHttpError from "http-errors";
 import { SaveAfterImages } from "../utils/interfaces/saveAfterImages.interface";
@@ -17,16 +17,16 @@ const saveAfterImages = async (newAfterImages: SaveAfterImages) => {
 
   // subquery to get empId using empEmailId
   const empIdSubQuery = drizzlePool
-    .select({ empId: employee.id })
-    .from(employee)
-    .where(eq(employee.emailId, empEmailId));
+    .select({ empId: employeeTable.id })
+    .from(employeeTable)
+    .where(eq(employeeTable.emailId, empEmailId));
 
   // check if complaint with  "complaintId" is assigned to employee with  "EmpId".
   const [complaintwithcomplaintIdEmpId] = await drizzlePool
     .select()
-    .from(complaint)
+    .from(complaintTable)
     .where(
-      and(eq(complaint.id, complaintId), eq(complaint.empId, empIdSubQuery))
+      and(eq(complaintTable.id, complaintId), eq(complaintTable.empId, empIdSubQuery))
     );
   if (!complaintwithcomplaintIdEmpId) throw createHttpError.Forbidden();
 
@@ -37,7 +37,7 @@ const saveAfterImages = async (newAfterImages: SaveAfterImages) => {
     complaintId,
   }));
 
-  await drizzlePool.insert(afterImage).values(afterImageInserts);
+  await drizzlePool.insert(afterImageTable).values(afterImageInserts);
 };
 
 export default saveAfterImages;

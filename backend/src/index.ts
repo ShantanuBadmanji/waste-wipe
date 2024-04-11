@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { defaultErrorHandler } from "./middlewares/default-error-handler.middleware";
 import createHttpError from "http-errors";
-import { StrategyNames } from "./utils/types";
+import { StrategyName } from "./utils/types";
 import {
   localAdminStrategy,
   localEmployeeStrategy,
@@ -63,9 +63,9 @@ passport.deserializeUser(function (user: any, cb) {
   });
 });
 
-passport.use("local-user" satisfies StrategyNames, localUserStrategy);
-passport.use("local-admin" satisfies StrategyNames, localAdminStrategy);
-passport.use("local-employee" satisfies StrategyNames, localEmployeeStrategy);
+passport.use("local-user" satisfies StrategyName, localUserStrategy);
+passport.use("local-admin" satisfies StrategyName, localAdminStrategy);
+passport.use("local-employee" satisfies StrategyName, localEmployeeStrategy);
 
 app.use("/api/auth", AuthRouter);
 app.use("/api/users", UserRouter);

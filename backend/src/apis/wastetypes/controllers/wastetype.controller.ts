@@ -5,7 +5,7 @@ import createWasteTypeDto from "../dtos/createWasteType.dto";
 import { fromZodError } from "zod-validation-error";
 import createHttpError from "http-errors";
 import { stringToNumber } from "../../../lib/zod/string-to-number-schema";
-import { wasteType } from "../../../db/schemas";
+import { wasteTypeTable } from "../../../db/schemas";
 import updateWasteTypeDto from "../dtos/updateWasteType.dto";
 
 const WasteTypeRouter = Router();

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzlePool } from "../../../db/connect";
-import { beforeImage, complaint, gpsLocation, user } from "../../../db/schemas";
+import { beforeImageTable, complaintTable, gpsLocationTable, userTable } from "../../../db/schemas";
 import { CreateNewComplaint } from "../utils/interfaces/new-complaint.interface";
 
 const createNewComplaint = async (newComplaint: CreateNewComplaint) => {
@@ -14,29 +14,29 @@ const createNewComplaint = async (newComplaint: CreateNewComplaint) => {
    * Retrieves the user ID from the database.
    */
   const [{ userId }] = await drizzlePool
-    .select({ userId: user.id })
-    .from(user)
-    .where(eq(user.emailId, userEmailId));
+    .select({ userId: userTable.id })
+    .from(userTable)
+    .where(eq(userTable.emailId, userEmailId));
   console.log("🚀 ~ userId:", userId);
 
   await drizzlePool.transaction(async (tx) => {
     /**
      * Indicates whether the insertion of the complaint was successful.
      */
-    await tx.insert(complaint).values({ wastetypeId, userId, token });
+    await tx.insert(complaintTable).values({ wastetypeId, userId, token });
     /**
      * The ID of the complaint that was inserted.
      */
     const [{ complaintId }] = await tx
-      .select({ complaintId: complaint.id })
-      .from(complaint)
-      .where(eq(complaint.token, token));
+      .select({ complaintId: complaintTable.id })
+      .from(complaintTable)
+      .where(eq(complaintTable.token, token));
     console.log("🚀 ~ complaintId:", complaintId);
     /**
      * The GPS location to be inserted.
      */
     const gpsLocationInsertPromise = tx
-      .insert(gpsLocation)
+      .insert(gpsLocationTable)
       .values({ ...location, complaintId });
 
     /**
@@ -64,7 +64,7 @@ const createNewComplaint = async (newComplaint: CreateNewComplaint) => {
     }
 
     const beforeImageInsertPromise = tx
-      .insert(beforeImage)
+      .insert(beforeImageTable)
       .values(beforeImageInserts);
 
     /**

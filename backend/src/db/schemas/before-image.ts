@@ -6,16 +6,16 @@ import {
   tinyint,
   varchar,
 } from "drizzle-orm/mysql-core";
-import { complaint } from "./complaint";
+import  complaintTable  from "./complaint";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
-export const beforeImage = mysqlTable(
+const beforeImageTable = mysqlTable(
   "BEFORE_IMAGE",
   {
     id: tinyint("id").notNull(),
     complaintId: int("complaint_id", { unsigned: true })
       .notNull()
-      .references(() => complaint.id, {
+      .references(() => complaintTable.id, {
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
@@ -32,5 +32,7 @@ export const beforeImage = mysqlTable(
   }
 );
 
-export type SelectBeforeImage = InferSelectModel<typeof beforeImage>;
-export type InsertBeforeImage = InferInsertModel<typeof beforeImage>;
+export type SelectBeforeImage = InferSelectModel<typeof beforeImageTable>;
+export type InsertBeforeImage = InferInsertModel<typeof beforeImageTable>;
+
+export default beforeImageTable;

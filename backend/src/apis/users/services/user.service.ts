@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import { drizzlePool } from "../../../db/connect";
-import { user } from "../../../db/schemas";
+import { userTable } from "../../../db/schemas";
 import { InsertUser } from "../../../db/schemas/user";
 
 /**
@@ -8,8 +8,8 @@ import { InsertUser } from "../../../db/schemas/user";
  */
 const getUsers = async () => {
   const users = await drizzlePool
-    .select({ name: user.name, emailId: user.emailId })
-    .from(user);
+    .select({ name: userTable.name, emailId: userTable.emailId })
+    .from(userTable);
 
   if (users.length === 0) throw createHttpError("No users found");
 
@@ -22,7 +22,7 @@ const getUsers = async () => {
  * @param newUser - User details to be created.
  */
 const CreateNewUser = async (newUser: InsertUser) => {
-  await drizzlePool.insert(user).values({ ...newUser });
+  await drizzlePool.insert(userTable).values({ ...newUser });
   console.log("🚀 ~ drizzlePool:", "insertion done");
 };
 

@@ -1,13 +1,12 @@
 import { eq } from "drizzle-orm";
-import {
+import complaintStatusTable, {
   InsertComplaintStatus,
-  complaintStatus,
 } from "../../../db/schemas/complaint-status";
 import { drizzlePool } from "../../../db/connect";
 import { UpdateComplaintStatus } from "../utils/interfaces/UpdateComplaintStatus.interface";
 
 const getComplaintStatuses = async () => {
-  const compStatuses = await drizzlePool.select().from(complaintStatus);
+  const compStatuses = await drizzlePool.select().from(complaintStatusTable);
 
   if (compStatuses.length == 0) throw new Error("No complaint status found");
 
@@ -18,23 +17,23 @@ const createComplaintStatus = async (newStatus: InsertComplaintStatus) => {
   const statusName = newStatus.statusName;
   console.log("🚀 ~ postComplaintStatus ~ statusName:", statusName);
 
-  await drizzlePool.insert(complaintStatus).values({ statusName });
+  await drizzlePool.insert(complaintStatusTable).values({ statusName });
 };
 
 const deleteComplaintStatusById = async (statusId: number) => {
   console.log("🚀 ~ deleteComplaintStatusById ~ statusId:", statusId);
 
   await drizzlePool
-    .delete(complaintStatus)
-    .where(eq(complaintStatus.id, statusId));
+    .delete(complaintStatusTable)
+    .where(eq(complaintStatusTable.id, statusId));
 };
 
 const putComplaintStatusById = async (newStatus: UpdateComplaintStatus) => {
   const { id, statusName } = newStatus;
   await drizzlePool
-    .update(complaintStatus)
+    .update(complaintStatusTable)
     .set({ statusName })
-    .where(eq(complaintStatus.id, id));
+    .where(eq(complaintStatusTable.id, id));
 };
 
 const ComplaintStatusService = {

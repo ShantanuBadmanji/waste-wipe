@@ -1,21 +1,21 @@
-import { admin } from "./admin";
-import { afterImage } from "./after-image";
-import { beforeImage } from "./before-image";
-import { complaint } from "./complaint";
-import { complaintStatus } from "./complaint-status";
-import { employee } from "./employee";
-import { gpsLocation } from "./gps-location";
-import { user } from "./user";
-import { wasteType } from "./waste-type";
+import adminTable from "./admin";
+import afterImageTable from "./after-image";
+import beforeImageTable from "./before-image";
+import complaintTable from "./complaint";
+import complaintStatusTable from "./complaint-status";
+import employeeTable from "./employee";
+import gpsLocationTable from "./gps-location";
+import userTable from "./user";
+import wasteTypeTable from "./waste-type";
 
 export {
-  user,
-  employee,
-  admin,
-  wasteType,
-  complaintStatus,
-  complaint,
-  beforeImage,
-  afterImage,
-  gpsLocation,
+  userTable,
+  employeeTable,
+  adminTable,
+  wasteTypeTable,
+  complaintStatusTable,
+  complaintTable,
+  beforeImageTable,
+  afterImageTable,
+  gpsLocationTable,
 };

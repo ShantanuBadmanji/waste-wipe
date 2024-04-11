@@ -1,8 +1,8 @@
 import passport, { AuthenticateCallback } from "passport";
-import {  StrategyNames } from "../utils/types";
+import {  StrategyName } from "../utils/types";
 import { NextFunction, Request, Response } from "express-serve-static-core";
 
-export const passportAuthenticateLocal = (strategy: StrategyNames) => {
+export const passportAuthenticateLocal = (strategy: StrategyName) => {
   return (req: Request, res: Response, next: NextFunction) => {
     console.log("🚀 ~ AuthRouter.post ~ body:", req.body);
 
@@ -19,7 +19,7 @@ export const passportAuthenticateLocal = (strategy: StrategyNames) => {
     };
 
     passport.authenticate(
-      strategy satisfies StrategyNames,
+      strategy satisfies StrategyName,
       cb satisfies AuthenticateCallback
     )(req, res, next);
   };

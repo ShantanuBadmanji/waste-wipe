@@ -1,14 +1,14 @@
 import { eq, sql } from "drizzle-orm";
 import { drizzlePool } from "../../../db/connect";
 import {
-  afterImage,
-  beforeImage,
-  complaint,
-  complaintStatus,
-  employee,
-  gpsLocation,
-  user,
-  wasteType,
+  afterImageTable,
+  beforeImageTable,
+  complaintTable,
+  complaintStatusTable,
+  employeeTable,
+  gpsLocationTable,
+  userTable,
+  wasteTypeTable,
 } from "../../../db/schemas";
 
 /**
@@ -17,44 +17,44 @@ import {
 const getComplaints = async () => {
   const complaints = await drizzlePool
     .select({
-      id: complaint.id,
-      token: complaint.token,
-      createdAt: complaint.createdAt,
-      modifiedAt: complaint.modifiedAt,
-      typeName: wasteType.typeName,
-      statusName: complaintStatus.statusName,
+      id: complaintTable.id,
+      token: complaintTable.token,
+      createdAt: complaintTable.createdAt,
+      modifiedAt: complaintTable.modifiedAt,
+      typeName: wasteTypeTable.typeName,
+      statusName: complaintStatusTable.statusName,
       user: {
-        name: user.name,
-        emailId: user.emailId,
+        name: userTable.name,
+        emailId: userTable.emailId,
       },
       employee: {
-        name: employee.name,
-        emailId: employee.emailId,
-        contactInfo: employee.contactInfo,
+        name: employeeTable.name,
+        emailId: employeeTable.emailId,
+        contactInfo: employeeTable.contactInfo,
       },
       location: {
-        latitude: gpsLocation.latitude,
-        longitude: gpsLocation.longitude,
-        city: gpsLocation.city,
-        area: gpsLocation.area,
-        address: gpsLocation.address,
+        latitude: gpsLocationTable.latitude,
+        longitude: gpsLocationTable.longitude,
+        city: gpsLocationTable.city,
+        area: gpsLocationTable.area,
+        address: gpsLocationTable.address,
       },
-      beforeImages: sql<string | null>`group_concat(${beforeImage.url})`.as(
+      beforeImages: sql<string | null>`group_concat(${beforeImageTable.url})`.as(
         "beforeImages"
       ),
-      afterImages: sql<string | null>`group_concat(${afterImage.url})`.as(
+      afterImages: sql<string | null>`group_concat(${afterImageTable.url})`.as(
         "afterImages"
       ),
     })
-    .from(complaint)
-    .leftJoin(wasteType, eq(complaint.wastetypeId, wasteType.id))
-    .leftJoin(complaintStatus, eq(complaint.statusId, complaintStatus.id))
-    .leftJoin(user, eq(complaint.userId, user.id))
-    .leftJoin(employee, eq(complaint.empId, employee.id))
-    .leftJoin(gpsLocation, eq(complaint.id, gpsLocation.complaintId))
-    .leftJoin(beforeImage, eq(complaint.id, beforeImage.complaintId))
-    .leftJoin(afterImage, eq(complaint.id, afterImage.complaintId))
-    .groupBy(complaint.id);
+    .from(complaintTable)
+    .leftJoin(wasteTypeTable, eq(complaintTable.wastetypeId, wasteTypeTable.id))
+    .leftJoin(complaintStatusTable, eq(complaintTable.statusId, complaintStatusTable.id))
+    .leftJoin(userTable, eq(complaintTable.userId, userTable.id))
+    .leftJoin(employeeTable, eq(complaintTable.empId, employeeTable.id))
+    .leftJoin(gpsLocationTable, eq(complaintTable.id, gpsLocationTable.complaintId))
+    .leftJoin(beforeImageTable, eq(complaintTable.id, beforeImageTable.complaintId))
+    .leftJoin(afterImageTable, eq(complaintTable.id, afterImageTable.complaintId))
+    .groupBy(complaintTable.id);
 
   console.log("🚀 ~ complaints:", complaints);
   const resComplaints = complaints.map((complt) => {

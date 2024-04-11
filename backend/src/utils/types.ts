@@ -1,4 +1,4 @@
-import { admin, employee, user } from "../db/schemas";
+import { adminTable, employeeTable, userTable } from "../db/schemas";
 
 interface DataResBody<T> {
   data: T;
@@ -9,19 +9,33 @@ interface MessageResBody {
   status: number;
 }
 
-export type Role = "user" | "employee" | "admin";
+type ObjectKeys<T> = T[keyof T];
 
-export type PersonTable = typeof user | typeof admin | typeof employee;
+const Roles = {
+  user: "user",
+  employee: "employee",
+  admin: "admin",
+} as const;
+
+export type Role = ObjectKeys<typeof Roles>;
+
+const strategyNames = {
+  localUser: "local-user",
+  localEmployee: "local-employee",
+  localAdmin: "local-admin",
+} as const;
+
+export type StrategyName = ObjectKeys<typeof strategyNames>;
 
 interface SessionUser {
   id: string;
   role: Role;
 }
 
-export type StrategyNames = "local-user" | "local-employee" | "local-admin";
-
 declare global {
   namespace Express {
     interface User extends SessionUser {}
   }
 }
+
+export type PersonTable = typeof userTable | typeof adminTable | typeof employeeTable;
