@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import createHttpError from "http-errors";
-import { MessageResBody } from "../utils/types";
+
 
 export const defaultErrorHandler = (
   e: any,
   req: Request,
-  res: Response<MessageResBody>,
+  res: Response,
   next: NextFunction
 ) => {
   let errStatus = 500;

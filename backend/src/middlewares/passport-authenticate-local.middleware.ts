@@ -1,9 +1,9 @@
 import passport, { AuthenticateCallback } from "passport";
-import { MessageResBody, StrategyNames } from "../utils/types";
+import {  StrategyNames } from "../utils/types";
 import { NextFunction, Request, Response } from "express-serve-static-core";
 
 export const passportAuthenticateLocal = (strategy: StrategyNames) => {
-  return (req: Request, res: Response<MessageResBody>, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     console.log("🚀 ~ AuthRouter.post ~ body:", req.body);
 
     const cb = (err: any, user: Express.User | false | null | undefined) => {

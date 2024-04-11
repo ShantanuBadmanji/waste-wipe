@@ -1,9 +1,6 @@
-import { Response, Request, NextFunction } from "express-serve-static-core";
 import { eq } from "drizzle-orm";
-import { DataResBody, MessageResBody } from "../../../utils/types";
 import {
   InsertComplaintStatus,
-  SelectComplaintStatus,
   complaintStatus,
 } from "../../../db/schemas/complaint-status";
 import { drizzlePool } from "../../../db/connect";
