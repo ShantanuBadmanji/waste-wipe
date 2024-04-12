@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import createHttpError from "http-errors";
 
-
-export const defaultErrorHandler = (
+const defaultErrorHandler = (
   e: any,
   req: Request,
   res: Response,
@@ -15,3 +14,5 @@ export const defaultErrorHandler = (
   }
   res.status(errStatus).json({ message: errMsg, status: errStatus });
 };
+
+export default defaultErrorHandler;

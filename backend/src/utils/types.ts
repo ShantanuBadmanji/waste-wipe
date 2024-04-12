@@ -11,7 +11,7 @@ interface MessageResBody {
 
 type ObjectKeys<T> = T[keyof T];
 
-const Roles = {
+export const Roles = {
   user: "user",
   employee: "employee",
   admin: "admin",
@@ -19,7 +19,7 @@ const Roles = {
 
 export type Role = ObjectKeys<typeof Roles>;
 
-const strategyNames = {
+export const strategyNames = {
   localUser: "local-user",
   localEmployee: "local-employee",
   localAdmin: "local-admin",
@@ -38,4 +38,7 @@ declare global {
   }
 }
 
-export type PersonTable = typeof userTable | typeof adminTable | typeof employeeTable;
+export type PersonTable =
+  | typeof userTable
+  | typeof adminTable
+  | typeof employeeTable;

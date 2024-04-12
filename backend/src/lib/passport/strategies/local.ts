@@ -5,7 +5,7 @@ import {
 import { drizzlePool } from "../../../db/connect";
 import { adminTable, employeeTable, userTable } from "../../../db/schemas";
 import { eq } from "drizzle-orm";
-import { PersonTable, Role } from "../../../utils/types";
+import { PersonTable, Role, Roles } from "../../../utils/types";
 import createHttpError from "http-errors";
 
 import { Request } from "express-serve-static-core";
@@ -47,13 +47,13 @@ const verifyFromTable = (table: PersonTable, role: Role) => {
 };
 export const localUserStrategy = new LocalStrategy(
   strategyOptions,
-  verifyFromTable(userTable, "user")
+  verifyFromTable(userTable, Roles.user)
 );
 export const localAdminStrategy = new LocalStrategy(
   strategyOptions,
-  verifyFromTable(adminTable, "admin")
+  verifyFromTable(adminTable, Roles.admin)
 );
 export const localEmployeeStrategy = new LocalStrategy(
   strategyOptions,
-  verifyFromTable(employeeTable, "employee")
+  verifyFromTable(employeeTable, Roles.employee)
 );

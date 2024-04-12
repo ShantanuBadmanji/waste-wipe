@@ -1,26 +1,21 @@
 import "dotenv/config";
-import express from "express";
 import cors from "cors";
-import session from "express-session";
+import morgan from "morgan";
+import express from "express";
 import passport from "passport";
 import bodyParser from "body-parser";
+import session from "express-session";
 import cookieParser from "cookie-parser";
-import { defaultErrorHandler } from "./middlewares/default-error-handler.middleware";
 import createHttpError from "http-errors";
-import { StrategyName } from "./utils/types";
+import defaultErrorHandler from "./middlewares/default-error-handler.middleware";
+import { strategyNames } from "./utils/types";
 import {
   localAdminStrategy,
   localEmployeeStrategy,
   localUserStrategy,
 } from "./lib/passport/strategies/local";
-import morgan from "morgan";
+import ApiV1Router from "./apis/v1";
 
-import UserRouter from "./apis/users/controllers/user.controller";
-import ComplaintRouter from "./apis/complaints/controllers/complaints.controller";
-import AdminRouter from "./apis/admins/controllers/admin.controller";
-import ComplaintStatusRouter from "./apis/complaint-statuses/controllers/complaintStatus.controller";
-import WasteTypeRouter from "./apis/wastetypes/controllers/wastetype.controller";
-import AuthRouter from "./apis/auths/controllers/auth.controller";
 const app = express();
 
 app.use(morgan("dev"));
@@ -63,16 +58,11 @@ passport.deserializeUser(function (user: any, cb) {
   });
 });
 
-passport.use("local-user" satisfies StrategyName, localUserStrategy);
-passport.use("local-admin" satisfies StrategyName, localAdminStrategy);
-passport.use("local-employee" satisfies StrategyName, localEmployeeStrategy);
+passport.use(strategyNames.localUser, localUserStrategy);
+passport.use(strategyNames.localAdmin, localAdminStrategy);
+passport.use(strategyNames.localEmployee, localEmployeeStrategy);
 
-app.use("/api/auth", AuthRouter);
-app.use("/api/users", UserRouter);
-app.use("/api/admins", AdminRouter);
-app.use("/api/complaint-statuses", ComplaintStatusRouter);
-app.use("/api/wastetypes", WasteTypeRouter);
-app.use("/api/complaints", ComplaintRouter);
+app.use("/api/v1", ApiV1Router);
 
 // 404: page not found Handler
 app.use("/*", () => {
