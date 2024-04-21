@@ -132,3 +132,5 @@ dist
 # multer 
 uploads/
 
+# drizzle migration folder
+drizzle/
