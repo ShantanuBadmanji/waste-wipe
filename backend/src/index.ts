@@ -3,18 +3,14 @@ import cors from "cors";
 import morgan from "morgan";
 import express from "express";
 import passport from "passport";
+import ApiV1Router from "./apis/v1";
 import bodyParser from "body-parser";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import createHttpError from "http-errors";
+import localStrategy from "./lib/passport/strategies/local";
+import { strategyNames } from "./lib/passport/strategies/types";
 import defaultErrorHandler from "./middlewares/default-error-handler.middleware";
-import { strategyNames } from "./utils/types";
-import {
-  localAdminStrategy,
-  localEmployeeStrategy,
-  localUserStrategy,
-} from "./lib/passport/strategies/local";
-import ApiV1Router from "./apis/v1";
 
 const app = express();
 
@@ -58,9 +54,7 @@ passport.deserializeUser(function (user: any, cb) {
   });
 });
 
-passport.use(strategyNames.localUser, localUserStrategy);
-passport.use(strategyNames.localAdmin, localAdminStrategy);
-passport.use(strategyNames.localEmployee, localEmployeeStrategy);
+passport.use(strategyNames.local, localStrategy);
 
 app.use("/api/v1", ApiV1Router);
 

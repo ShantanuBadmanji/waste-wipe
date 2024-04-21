@@ -1,19 +1,16 @@
 import { Router } from "express";
 import { passportAuthenticateLocal } from "../../../../middlewares/passport-authenticate-local.middleware";
 
+import CreateUserDto from "../../users/utils/dtos/createUser.dto";
+import { fromZodError } from "zod-validation-error";
+import createHttpError from "http-errors";
+import { createNewUser } from "../../users/services/user.service";
+import { strategyNames } from "../../../../lib/passport/strategies/types";
+
 /**
  * Router for handling authentication related endpoints.
  */
 const AuthRouter = Router();
-
-/**
- * GET endpoint for the root of the authentication API.
- * @param req - Express request object.
- * @param res - Express response object.
- */
-AuthRouter.get("/", (req, res) => {
-  res.json({ message: "welcome to api/auth endpoint", status: 200 });
-});
 
 /**
  * POST endpoint for successful login.
@@ -25,27 +22,38 @@ AuthRouter.post("/login/success", (req, res) =>
 );
 
 /**
- * POST endpoint for authenticating users with local-user passport strategy.
+ * POST endpoint for authenticating users with local passport strategy.
  * @param req - Express request object.
  * @param res - Express response object.
  */
-AuthRouter.post("/login/local-user", passportAuthenticateLocal("local-user"));
+AuthRouter.post("/login/local", passportAuthenticateLocal(strategyNames.local));
 
 /**
- * POST endpoint for authenticating employees with local-employee passport strategy.
+ * POST endpoint for user signup.
  * @param req - Express request object.
  * @param res - Express response object.
+ * @param next - Express next function.
  */
-AuthRouter.post(
-  "/login/local-employee",
-  passportAuthenticateLocal("local-employee")
-);
+AuthRouter.post("/signup", async (req, res, next) => {
+  try {
+    // validate the request body using the CreateUserDto schema
+    const safeParsedUser = CreateUserDto.safeParse(req.body);
+    if (!safeParsedUser.success) {
+      console.log(
+        "🚀 ~ .post ~ safeParsedUser.error.flatten():",
+        safeParsedUser.error.flatten()
+      );
+      throw createHttpError(400, fromZodError(safeParsedUser.error).toString());
+    }
+    safeParsedUser.data;
+    console.log("🚀 ~ .post ~ safeParsedUser.data:", safeParsedUser.data);
 
-/**
- * POST endpoint for authenticating admins with local-admin passport strategy.
- * @param req - Express request object.
- * @param res - Express response object.
- */
-AuthRouter.post("/login/local-admin", passportAuthenticateLocal("local-admin"));
+    await createNewUser(safeParsedUser.data);
+
+    res.status(201).json({ message: "created user successfully", status: 201 });
+  } catch (error: any) {
+    next(error);
+  }
+});
 
 export default AuthRouter;

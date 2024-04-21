@@ -5,7 +5,7 @@ import {
   primaryKey,
   varchar,
 } from "drizzle-orm/mysql-core";
-import complaintTable  from "./complaint";
+import complaintTable from "./complaint";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 const gpsLocationTable = mysqlTable(
@@ -13,6 +13,7 @@ const gpsLocationTable = mysqlTable(
   {
     complaintId: int("complaint_id", { unsigned: true })
       .notNull()
+      .primaryKey()
       .references(() => complaintTable.id, {
         onDelete: "cascade",
         onUpdate: "cascade",
@@ -22,15 +23,15 @@ const gpsLocationTable = mysqlTable(
     city: varchar("city", { length: 50 }),
     longitude: float("longitude"),
     latitude: float("latitude"),
-  },
-  (table) => {
-    return {
-      gpsLocationComplaintId: primaryKey({
-        columns: [table.complaintId],
-        name: "GPS_LOCATION_complaint_id",
-      }),
-    };
   }
+  // (table) => {
+  //   return {
+  //     gpsLocationComplaintId: primaryKey({
+  //       columns: [table.complaintId],
+  //       name: "GPS_LOCATION_complaint_id",
+  //     }),
+  //   };
+  // }
 );
 
 export type SelectGpsLocation = InferSelectModel<typeof gpsLocationTable>;

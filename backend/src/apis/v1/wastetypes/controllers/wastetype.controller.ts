@@ -5,8 +5,9 @@ import createWasteTypeDto from "../dtos/createWasteType.dto";
 import { fromZodError } from "zod-validation-error";
 import createHttpError from "http-errors";
 import { stringToNumber } from "../../../../lib/zod/string-to-number-schema";
-import { wasteTypeTable } from "../../../../db/schemas";
 import updateWasteTypeDto from "../dtos/updateWasteType.dto";
+import { roles } from "../../../../db/schemas/user";
+
 
 const WasteTypeRouter = Router();
 
@@ -20,7 +21,7 @@ WasteTypeRouter.get("/", async (req, res, next) => {
   }
 });
 
-WasteTypeRouter.use(PrivilegedRoles(["admin"]))
+WasteTypeRouter.use(PrivilegedRoles([roles.admin]))
   .post("/", async (req, res, next) => {
     try {
       const parsedWasteType = createWasteTypeDto.safeParse(req.body);

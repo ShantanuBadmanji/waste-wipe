@@ -1,6 +1,9 @@
 import { z } from "zod";
 import multerImagesDto from "./multerImages.dto";
-import { stringToNumber } from "../../../../../lib/zod/string-to-number-schema";
+import {
+  stringToFloat,
+  stringToNumber,
+} from "../../../../../lib/zod/string-to-number-schema";
 
 /**
  * Represents the data transfer object for creating a complaint.
@@ -12,8 +15,8 @@ const createComplaintDto = z.object({
     .transform((value) => JSON.parse(value))
     .pipe(
       z.object({
-        latitude: stringToNumber,
-        longitude: stringToNumber,
+        latitude: stringToFloat,
+        longitude: stringToFloat,
       })
     ),
   beforeImages: multerImagesDto,

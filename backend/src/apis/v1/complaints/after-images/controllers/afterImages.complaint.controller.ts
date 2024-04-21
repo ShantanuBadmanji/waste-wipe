@@ -7,6 +7,7 @@ import { stringToNumber } from "../../../../../lib/zod/string-to-number-schema";
 import getAfterImages from "../services/get-after-images.service";
 import { fromZodError } from "zod-validation-error";
 import { parser } from "../../../../../lib/multer";
+import { roles } from "../../../../../db/schemas/user";
 
 /**
  * Express router for handling after images related routes.
@@ -49,7 +50,7 @@ AfterImagesRouter.get("/", PrivilegedRoles([]), async (req, res, next) => {
  */
 AfterImagesRouter.post(
   "/",
-  PrivilegedRoles(["employee", "admin"]),
+  PrivilegedRoles([roles.admin, roles.basic]),
   parser.array("afterImages", 3),
   async (req, res, next) => {
     try {

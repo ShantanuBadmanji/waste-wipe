@@ -1,6 +1,6 @@
 import passport, { AuthenticateCallback } from "passport";
-import {  StrategyName } from "../utils/types";
 import { NextFunction, Request, Response } from "express-serve-static-core";
+import { StrategyName } from "../lib/passport/strategies/types";
 
 export const passportAuthenticateLocal = (strategy: StrategyName) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +14,11 @@ export const passportAuthenticateLocal = (strategy: StrategyName) => {
 
       req.logIn(user, (err) => {
         if (err) next(err);
-        return res.json({ message: "session created", status: 200 });
+        return res.json({
+          message: "session created",
+          data: { user },
+          status: 200,
+        });
       });
     };
 

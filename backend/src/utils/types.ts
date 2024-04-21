@@ -1,4 +1,4 @@
-import { adminTable, employeeTable, userTable } from "../db/schemas";
+import { Role } from "../db/schemas/user";
 
 interface DataResBody<T> {
   data: T;
@@ -9,23 +9,7 @@ interface MessageResBody {
   status: number;
 }
 
-type ObjectKeys<T> = T[keyof T];
-
-export const Roles = {
-  user: "user",
-  employee: "employee",
-  admin: "admin",
-} as const;
-
-export type Role = ObjectKeys<typeof Roles>;
-
-export const strategyNames = {
-  localUser: "local-user",
-  localEmployee: "local-employee",
-  localAdmin: "local-admin",
-} as const;
-
-export type StrategyName = ObjectKeys<typeof strategyNames>;
+export type ObjectKeys<T> = T[keyof T];
 
 interface SessionUser {
   id: string;
@@ -37,8 +21,3 @@ declare global {
     interface User extends SessionUser {}
   }
 }
-
-export type PersonTable =
-  | typeof userTable
-  | typeof adminTable
-  | typeof employeeTable;

@@ -8,6 +8,8 @@ import createNewComplaint from "../services/create-new-complaint.service";
 import { PrivilegedRoles } from "../../../../middlewares/privileged-roles.middleware";
 import deleteImagesFromCloudinary from "../../../../lib/multer-cloudinary/delete-images-from-cloudinary";
 import AfterImagesRouter from "../after-images/controllers/afterImages.complaint.controller";
+import { z } from "zod";
+import { roles } from "../../../../db/schemas/user";
 
 /**
  * Express router for handling complaints.
@@ -20,8 +22,22 @@ const ComplaintRouter = Router();
  */
 ComplaintRouter.get("/", async (req, res, next) => {
   try {
+    // Parse the token from the query.
+    const parsedToken = z.string().safeParse(req.query.token);
+    if (!parsedToken.success) {
+      console.log(
+        "🚀 ~ ComplaintRouter.get ~ parsedToken.error:",
+        parsedToken.error.flatten()
+      );
+      throw createHttpError.BadRequest(
+        fromZodError(parsedToken.error).toString()
+      );
+    }
     // Retrieve all complaints from the database.
-    const complaints = await getComplaints();
+    const complaints = parsedToken.data
+      ? await getComplaints.ByToken(parsedToken.data)
+      : await getComplaints.All();
+
     res.status(200).json({ data: complaints, status: 200 });
   } catch (error: any) {
     next(error);
@@ -36,7 +52,7 @@ ComplaintRouter.get("/", async (req, res, next) => {
  */
 ComplaintRouter.post(
   "/",
-  PrivilegedRoles(["user"]),
+  PrivilegedRoles([roles.basic]),
   parser.array("beforeImages", 3),
   async (req, res, next) => {
     try {

@@ -1,5 +1,6 @@
 import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
 import {
+  bigint,
   index,
   int,
   mysqlTable,
@@ -10,7 +11,6 @@ import {
 import wasteTypeTable from "./waste-type";
 import complaintStatusTable from "./complaint-status";
 import userTable from "./user";
-import employeeTable from "./employee";
 
 const complaintTable = mysqlTable(
   "COMPLAINT",
@@ -31,14 +31,20 @@ const complaintTable = mysqlTable(
       onDelete: "set null",
       onUpdate: "cascade",
     }),
-    userId: int("user_id", { unsigned: true }).references(() => userTable.id, {
-      onDelete: "set null",
-      onUpdate: "cascade",
-    }),
-    empId: int("emp_id", { unsigned: true }).references(() => employeeTable.id, {
-      onDelete: "set null",
-      onUpdate: "cascade",
-    }),
+    userId: bigint("user_id", { mode: "number", unsigned: true }).references(
+      () => userTable.id,
+      {
+        onDelete: "set null",
+        onUpdate: "cascade",
+      }
+    ),
+    empId: bigint("emp_id", { mode: "number", unsigned: true }).references(
+      () => userTable.id,
+      {
+        onDelete: "set null",
+        onUpdate: "cascade",
+      }
+    ),
   },
   (table) => {
     return {

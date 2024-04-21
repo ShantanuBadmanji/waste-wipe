@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import createHttpError from "http-errors";
-import { Role } from "../utils/types";
+import { Role } from "../db/schemas/user";
 
 /**
  * Middleware function to check if the user has the required privileges.

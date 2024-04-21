@@ -6,6 +6,8 @@ import { fromZodError } from "zod-validation-error";
 import createHttpError from "http-errors";
 import { stringToNumber } from "../../../../lib/zod/string-to-number-schema";
 import updateComplaintStatusDto from "../utils/dtos/updateComplaintStatus.dto";
+import { roles } from "../../../../db/schemas/user";
+
 
 const ComplaintStatusRouter = Router();
 
@@ -23,7 +25,7 @@ ComplaintStatusRouter.get("/", async (req, res, next) => {
   }
 });
 
-ComplaintStatusRouter.use(PrivilegedRoles(["admin"]));
+ComplaintStatusRouter.use(PrivilegedRoles([roles.admin]));
 
 /**
  * Create a new complaint status.

@@ -1,21 +1,24 @@
-import adminTable from "./admin";
 import afterImageTable from "./after-image";
 import beforeImageTable from "./before-image";
 import complaintTable from "./complaint";
 import complaintStatusTable from "./complaint-status";
-import employeeTable from "./employee";
+import employeeApplicationTable from "./employee-application";
 import gpsLocationTable from "./gps-location";
 import userTable from "./user";
 import wasteTypeTable from "./waste-type";
+import employeeDetailsTable from "./employee-details";
+import profileTable from "./profile";
 
+  
 export {
   userTable,
-  employeeTable,
-  adminTable,
   wasteTypeTable,
   complaintStatusTable,
   complaintTable,
   beforeImageTable,
   afterImageTable,
   gpsLocationTable,
+  employeeApplicationTable,
+  employeeDetailsTable,
+  profileTable,
 };
