@@ -11,6 +11,7 @@ import createHttpError from "http-errors";
 import localStrategy from "./lib/passport/strategies/local";
 import { strategyNames } from "./lib/passport/strategies/types";
 import defaultErrorHandler from "./middlewares/default-error-handler.middleware";
+import { drizzlePool, mysqlConnPromise } from "./db/connect";
 
 const app = express();
 
@@ -66,4 +67,11 @@ app.use("/*", () => {
 // default Error Handler
 app.use(defaultErrorHandler);
 const PORT = 3000;
+
+// test mysql connection
+mysqlConnPromise().then((conn) => {
+  console.log("mysql connected successfully");
+  conn.end();
+});
+
 app.listen(PORT, () => console.log(`server live on ${PORT}`));
